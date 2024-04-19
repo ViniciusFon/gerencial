@@ -1,0 +1,65 @@
+
+application:
+  title: Relatórios Gerenciais
+  version: 1.0.0
+
+spring:
+  data:
+    mongodb:
+      database: relatorio_gerencial
+      uri: mongodb://root:admin@localhost:27017/${spring.data.mongodb.database}?authSource=admin
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+
+  security:
+    default-matchers:
+      /actuator**/**,
+      /v3/api-docs/**,
+      /v2/api-docs/**,
+      /configuration/ui,
+      /gerencial/swagger-resources/**,
+      /gerencial/configuration/**,
+      /gerencial/swagger-ui/index.html,
+      /gerencial/swagger-ui/**,
+      /webjars/**,
+      /actuator/**,
+      /usuario/login/**
+    default-admin:
+
+    expiration-time: 30
+    time-new-token: 300
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: "/gerencial/swagger-ui.html"
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+
+arquivo:
+  fechamento:
+    path: C:\Users\tc024145\Documents\Arquivos\NovoFechamento.txt
+  icms:
+    path: C:\Users\tc024145\Documents\Arquivos\ICMS.txt
+  nota:
+    path: C:\Users\tc024145\Documents\Arquivos\Notas.txt
+  obriAcess:
+    path: C:\Users\tc024145\Documents\Arquivos\ObriAcess.txt
+  ipi:
+    path: C:\Users\tc024145\Documents\Arquivos\IPI.txt
+  monetizacao:
+    path: C:\Users\tc024145\Documents\Arquivos\Monetizacao.txt
+  apuracao:
+    path: C:\Users\tc024145\Documents\Arquivos\Apuracao.txt
+  faturamento:
+    path: C:\Users\tc024145\Documents\Arquivos\Faturamento.txt
