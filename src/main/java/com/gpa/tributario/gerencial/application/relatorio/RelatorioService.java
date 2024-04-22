@@ -208,10 +208,10 @@ public class RelatorioService {
     }
 
     private void montaObrigacoes(Relatorio relatorio, LocalDate data, String uf) {
-        List<ObriAcess> lstObri = obriAcessRepository.findByDataObriAndUf(data, uf);
+        List<ObriAcess> lstObri = obriAcessRepository.findByDataObriAndUfOrderByCodEstabelecimento(data, uf);
         long totalObrig = lstObri.stream().mapToLong(ObriAcess::getTotal).sum();
         relatorio.setObrigacoesAcessorias(totalObrig);
-        relatorio.setQtdeFiliais((long) lstObri.size());
+        relatorio.setQtdeFiliais(lstObri.size());
     }
 
     private void montaMonetizacao(Relatorio relatorio, LocalDate data, String uf) {

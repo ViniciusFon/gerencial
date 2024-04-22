@@ -50,7 +50,7 @@ public class ObriAcessService extends ArquivoBaseService<ObriAcess> {
 
     public List<ObriAcessResponse> buscaPorDataUf(LocalDate data, String uf ){
 
-        List<ObriAcess> lst = obriAcessRepository.findByDataObriAndUf(data, uf.toUpperCase());
+        List<ObriAcess> lst = obriAcessRepository.findByDataObriAndUfOrderByCodEstabelecimento(data, uf.toUpperCase());
 
         return lst.stream().map(this::getResponse).toList();
     }

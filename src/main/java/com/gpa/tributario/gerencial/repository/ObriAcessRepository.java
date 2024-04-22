@@ -11,7 +11,7 @@ import java.util.List;
 public interface ObriAcessRepository extends MongoRepository<ObriAcess, String> {
 
     List<ObriAcess> findByDataObriAndUfAndCodEstabelecimento(LocalDate data, String uf, String codEstabelecimento);
-    List<ObriAcess> findByDataObriAndUf(LocalDate data, String uf);
+    List<ObriAcess> findByDataObriAndUfOrderByCodEstabelecimento(LocalDate data, String uf);
     List<ObriAcess> findByCnpj(String cnpj);
     List<ObriAcess> findByDataObriAndCnpj(LocalDate data, String cnpj);
     Long deleteByDataObri(LocalDate dataObri);
