@@ -83,7 +83,11 @@ public class RelatorioService {
 
         if(relatorio != null) {
             calculaValores(relatorio, data, uf);
-            processarPorcentagemESalvar(List.of(relatorio));
+            salvar(relatorio);
+
+            List<Relatorio> lst = relatorioRepository.findByData(id.getData());
+
+            processarPorcentagemEsalvar(lst);
         }
     }
 
@@ -104,17 +108,18 @@ public class RelatorioService {
             novaLista.add(relatorio);
         }
 
-        processarPorcentagemESalvar(novaLista);
+        processarPorcentagemEsalvar(novaLista);
+
     }
 
-    private void processarPorcentagemESalvar(List<Relatorio> lst){
+    private void processarPorcentagemEsalvar(List<Relatorio> lst){
 
         double totalFaturamento = lst.stream().mapToDouble(Relatorio::getFaturamento).sum();
         double totalIcms =  lst.stream().mapToDouble(Relatorio::getIcmsVenda).sum();
 
         lst.forEach(r -> {
             r.setPorcentFatTotal((int) Math.round(r.getFaturamento()/totalFaturamento*100));
-            r.setPorcentIcms(arredondar(r.getIcmsVenda()/totalIcms*100));
+            r.setPorcentIcms(r.getIcmsVenda()/totalIcms);
             salvar(r);
         });
     }
@@ -179,13 +184,13 @@ public class RelatorioService {
         relatorio.setValorRecolhidoMes(vlrRecolhidoMes);
 
         if(relatorio.getIcmsST() + relatorio.getIcmsProprio() != 0){
-            somaIcmsProprioFaturamento = arredondar((relatorio.getIcmsST() + relatorio.getIcmsProprio() + relatorio.getIcmsVenda())/ relatorio.getFaturamento());
+            somaIcmsProprioFaturamento = (relatorio.getIcmsST() + relatorio.getIcmsProprio() + relatorio.getIcmsVenda())/ relatorio.getFaturamento();
         }
         relatorio.setPorcentSomaIcmsPorFat(somaIcmsProprioFaturamento);
         if(relatorio.getFaturamento() == 0D)
             relatorio.setPercentFatVsRec(0D);
         else
-            relatorio.setPercentFatVsRec(arredondar(relatorio.getValorRecolhidoMes()/ relatorio.getFaturamento()));
+            relatorio.setPercentFatVsRec(relatorio.getValorRecolhidoMes()/ relatorio.getFaturamento());
     }
 
     private void montaApuracao(Relatorio relatorio, LocalDate data, String uf) {
