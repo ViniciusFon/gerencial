@@ -43,7 +43,7 @@ public class RelatorioController {
         relatorioService.processaRelatorioPorData(LocalDate.of(ano, mes, 1));
     }
 
-    @PutMapping("/{mes}/{ano}/{uf}")
+    @PatchMapping("/{mes}/{ano}/{uf}")
     public RelatorioResponse alterar(@PathVariable("mes") @Min(1) @Max(12) Integer mes,
                                      @PathVariable("ano") @Min(2000) @Max(2099) Integer ano,
                                      @PathVariable("uf") @Size(min = 2, max = 2) String uf,

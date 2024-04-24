@@ -49,4 +49,8 @@ public class Relatorio {
     private double saldoCredorIPI;
     private double saldoDevedorIPI;
 
+    public Relatorio(RelatorioID id){
+        this.id = id;
+    }
+
 }

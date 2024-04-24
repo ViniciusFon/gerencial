@@ -3,6 +3,7 @@ package com.gpa.tributario.gerencial.application.relatorio;
 import com.gpa.tributario.gerencial.application.relatorio.request.RelatorioRequest;
 import com.gpa.tributario.gerencial.application.relatorio.response.RelatorioResponse;
 import com.gpa.tributario.gerencial.entity.*;
+import com.gpa.tributario.gerencial.enuns.ScoreEnum;
 import com.gpa.tributario.gerencial.infrastructure.exception.NotFoundException;
 import com.gpa.tributario.gerencial.repository.*;
 import org.springframework.beans.BeanUtils;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,19 +74,13 @@ public class RelatorioService {
 
     @Async
     public void processaPorDataUF(LocalDate data, String uf){
-        RelatorioID id = new RelatorioID();
-        id.setData(data);
-        id.setUf(uf);
 
-        Relatorio relatorio = relatorioRepository.findById(id).orElse(null);
+        Relatorio relatorio = relatorioRepository.findById(new RelatorioID(data, uf)).orElse(null);
 
         if(relatorio != null) {
             calculaValores(relatorio, data, uf);
             salvar(relatorio);
-
-            List<Relatorio> lst = relatorioRepository.findByData(id.getData());
-
-            processarPorcentagemEsalvar(lst);
+            processarPorcentagemEsalvar(relatorioRepository.findByData(data));
         }
     }
 
@@ -96,20 +89,13 @@ public class RelatorioService {
         List<Relatorio> novaLista = new ArrayList<>();
 
         for(String uf : lstEstados){
-            RelatorioID id = new RelatorioID();
-            id.setData(data);
-            id.setUf(uf);
 
-            Relatorio relatorio = new Relatorio();
-            relatorio.setId(id);
-
+            Relatorio relatorio = new Relatorio(new RelatorioID(data,uf));
+            relatorio.setScoreFiscalizacao(ScoreEnum.LEVE);
             calculaValores(relatorio, data, uf);
-
             novaLista.add(relatorio);
         }
-
         processarPorcentagemEsalvar(novaLista);
-
     }
 
     private void processarPorcentagemEsalvar(List<Relatorio> lst){
@@ -128,12 +114,6 @@ public class RelatorioService {
 
         double result = ((valor1/valor2)-1)*100;
         return (int) Math.ceil(result);
-    }
-
-    private double arredondar(double valor){
-        BigDecimal bd = new BigDecimal(valor);
-        bd = bd.setScale(1, RoundingMode.HALF_UP);
-        return bd.doubleValue();
     }
 
     private void calculaValores(Relatorio relatorio, LocalDate data, String uf){
