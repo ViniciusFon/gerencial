@@ -3,6 +3,7 @@ package com.gpa.tributario.gerencial.controller;
 import com.gpa.tributario.gerencial.application.faturamento.FaturamentoService;
 import com.gpa.tributario.gerencial.application.faturamento.request.FaturamentoRequest;
 import com.gpa.tributario.gerencial.application.faturamento.response.FaturamentoResponse;
+import com.gpa.tributario.gerencial.application.faturamento.response.GraficoFaturamentoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -59,6 +60,14 @@ public class FaturamentoController {
     public List<FaturamentoResponse> buscarPorUf(@PathVariable("uf") @Size(min = 2, max = 2) String uf){
 
         return faturamentoService.buscaPorUf(uf);
+    }
+
+    @GetMapping("/grafico/{mes}/{ano}")
+    @Operation(summary = "Endpoint que busca o faturamento com a UF informada")
+    public List<GraficoFaturamentoResponse> buscarPorUf(@PathVariable("mes") @Min(1) @Max(12) Integer mes,
+                                                        @PathVariable("ano") @Min(2000) @Max(2099) Integer ano){
+
+        return faturamentoService.buscaGraficoFaturamento(LocalDate.of(ano, mes, 1));
     }
 
     @PostMapping("/importAll")

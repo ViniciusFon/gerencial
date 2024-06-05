@@ -133,7 +133,7 @@ public class RelatorioService {
         List<Icms> lstIcms = icmsRepository.findByDataIcmsAndCodEstadoAndDescricao(data, uf.toUpperCase(), "VENDA");
 
         double valor = lstIcms.stream()
-                .mapToDouble(Icms::getValorIcms) // Obtém o valorIcms de cada objeto
+                .mapToDouble(Icms::getValorIcms) // Obtém o valorIcms de cada objeto e os soma
                 .sum();
 
         relatorio.setIcmsVenda(valor);

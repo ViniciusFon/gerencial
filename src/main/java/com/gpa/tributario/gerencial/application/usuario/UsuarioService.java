@@ -124,6 +124,7 @@ public class UsuarioService {
         newUser.setUserName(request.getUserName().toUpperCase());
         newUser.setNome(request.getNome());
         newUser.setEmail(request.getEmail());
+        newUser.setFazFechamento(request.isFazFechamento());
         newUser.setPassword(securityConfiguration.passwordEncoder().encode(request.getPassword()));
         newUser.setRoles(request.getGrupos());
         newUser.setAtivo(true);

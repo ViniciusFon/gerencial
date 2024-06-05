@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  load-balance:
+    build:
+      context: ../nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - gerencial-network
+    depends_on:
+      - gerencial-api
+
+  gerencial-api:
+    container_name: gerencial-api
+    image: gpa_tributario/gerencial:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DATABASE: "host.docker.internal"
+      PORT: 27017
+      TZ: "America/Sao_Paulo"
+    networks:
+      - gerencial-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+
+networks:
+  gerencial-network:
+    driver: bridge

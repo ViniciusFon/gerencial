@@ -12,11 +12,9 @@ import java.util.List;
 public class UsuarioResponse {
 
     private String userName;
-
     private String nome;
-
     private String email;
-
+    private boolean fazFechamento;
     private List<RoleNameEnum> grupos;
 
     @JsonIgnore

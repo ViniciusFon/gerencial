@@ -3,7 +3,9 @@ package com.gpa.tributario.gerencial.application.faturamento;
 import com.gpa.tributario.gerencial.application.ArquivoBaseService;
 import com.gpa.tributario.gerencial.application.faturamento.request.FaturamentoRequest;
 import com.gpa.tributario.gerencial.application.faturamento.response.FaturamentoResponse;
+import com.gpa.tributario.gerencial.application.faturamento.response.GraficoFaturamentoResponse;
 import com.gpa.tributario.gerencial.application.relatorio.RelatorioService;
+import com.gpa.tributario.gerencial.dto.SomaDto;
 import com.gpa.tributario.gerencial.entity.Faturamento;
 import com.gpa.tributario.gerencial.entity.Icms;
 import com.gpa.tributario.gerencial.infrastructure.exception.NotFoundException;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -94,10 +97,15 @@ public class FaturamentoService extends ArquivoBaseService<Faturamento> {
         faturamentoRepository.delete(faturamento);
     }
 
+    public List<GraficoFaturamentoResponse> buscaGraficoFaturamento(LocalDate data){
+        List<SomaDto> lst = faturamentoRepository.sumFaturamentoByData(data.minusMonths(5));
+        return  lst.stream().map(f -> new GraficoFaturamentoResponse(f.get_id(), f.getTotal())).toList();
+    }
+
     public void importAll(){
         faturamentoRepository.deleteAll();
         try {
-            lerArquivo(new InputStreamReader(new FileInputStream(arquivo), "UTF-8"));
+            lerArquivo(new InputStreamReader(new FileInputStream(arquivo), StandardCharsets.UTF_8));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -116,12 +124,10 @@ public class FaturamentoService extends ArquivoBaseService<Faturamento> {
         return lstIcms.stream()
                 .mapToDouble(Icms::getValorIcms) // Obtém o valorIcms de cada objeto
                 .sum();
-
     }
 
     @Override
     protected Faturamento quebrar(String linha) {
-        System.out.println(linha);
 
         String[] split = linha.split("\t");
 
