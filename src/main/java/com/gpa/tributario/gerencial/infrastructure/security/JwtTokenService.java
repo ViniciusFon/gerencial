@@ -59,8 +59,8 @@ public class JwtTokenService {
             Usuario usuario = new Usuario();
 
             usuario.setUserName(decode.getSubject());
-            usuario.setNome(String.valueOf(decode.getClaim("Nome")));
-            usuario.setEmail(String.valueOf(decode.getClaim("Email")));
+            usuario.setNome(decode.getClaim("Nome").asString());
+            usuario.setEmail(decode.getClaim("Email").asString());
             usuario.setRoles(decode.getClaim("Authorities").asList(RoleNameEnum.class));
 
             UserDetailsImpl ud = new UserDetailsImpl(usuario);

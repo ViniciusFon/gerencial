@@ -3,6 +3,9 @@ application:
   title: Relatórios Gerenciais
   version: 1.0.0
 
+server:
+  port: 8080
+
 spring:
   data:
     mongodb:
@@ -26,7 +29,15 @@ spring:
       /gerencial/swagger-ui/**,
       /webjars/**,
       /actuator/**,
-      /usuario/login/**
+      /usuario/login/**,
+      /socket/**,
+      /socket,
+      /eventoFechamento/socket.register,
+      /index.html,
+      /js/main.js,
+      /css/main.css,
+      /maxresdefault.jpg,
+      /favicon.ico
     default-admin:
 
     expiration-time: 30

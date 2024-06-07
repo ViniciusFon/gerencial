@@ -12,7 +12,6 @@ public class EventoFechamentoResponse {
 
     private String id;
     private String UF;
-    private String userName;
     private String nome;
     private EmpresaEnum empresa;
     private String nomeRelatorio;

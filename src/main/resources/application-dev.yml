@@ -26,7 +26,9 @@ spring:
       /gerencial/swagger-ui/**,
       /webjars/**,
       /actuator/**,
-      /usuario/login/**
+      /usuario/login/**,
+      /socket/**,
+      /socket
     default-admin:
 
     expiration-time: 30
@@ -44,7 +46,7 @@ logging:
         data:
           mongodb:
             core:
-              MongoTemplate: DEBUG
+              MongoTemplate: ERROR
 
 arquivo:
   fechamento:

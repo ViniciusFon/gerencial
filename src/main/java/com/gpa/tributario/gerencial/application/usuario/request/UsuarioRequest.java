@@ -28,8 +28,6 @@ public class UsuarioRequest {
     @Email
     private String email;
 
-    private boolean fazFechamento;
-
     @NotEmpty
     private List<RoleNameEnum> grupos;
 

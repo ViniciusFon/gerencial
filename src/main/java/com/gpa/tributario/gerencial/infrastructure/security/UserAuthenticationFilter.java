@@ -52,6 +52,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
                 }
 
             } else {
+                System.out.println(request.getRequestURL());
                 throw new UnauthorizedException("O token está ausente.");
             }
         }
