@@ -10,7 +10,16 @@ services:
     networks:
       - gerencial-network
     depends_on:
+      - gerencial-front
+
+  gerencial-front:
+    container_name: gerencial-front
+    image: vinifontana/gerencial_fron:latest
+    networks:
+      - gerencial-network
+    depends_on:
       - gerencial-api
+    restart: always
 
   gerencial-api:
     container_name: gerencial-api
