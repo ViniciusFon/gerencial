@@ -74,3 +74,6 @@ arquivo:
     path: C:\Users\tc024145\Documents\Arquivos\Apuracao.txt
   faturamento:
     path: C:\Users\tc024145\Documents\Arquivos\Faturamento.txt
+
+webSocket:
+  origem: http://localhost

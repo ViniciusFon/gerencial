@@ -15,10 +15,27 @@ services:
   gerencial-front:
     container_name: gpa-gerencial-front
     image: gpa_tributario/gerencial_front:latest
-    ports:
-      - "4200:4200"
     networks:
       - gerencial-network
+    depends_on:
+      - gerencial-api
+
+
+  gerencial-api:
+    container_name: gpa-gerencial-api
+    image: gpa_tributario/gerencial:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DATABASE: "host.docker.internal"
+      PORT: 27017
+      WEBSOCKET_ORIGEM: "http://localhost"
+      TZ: "America/Sao_Paulo"
+    networks:
+      - gerencial-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: always
 
 networks:

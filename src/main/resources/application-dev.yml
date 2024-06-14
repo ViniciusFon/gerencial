@@ -48,6 +48,10 @@ logging:
             core:
               MongoTemplate: ERROR
 
+
+webSocket:
+  origem: ${WEBSOCKET_ORIGEM}
+
 arquivo:
   fechamento:
     path: C:\Users\tc024145\Documents\Arquivos\NovoFechamento.txt
