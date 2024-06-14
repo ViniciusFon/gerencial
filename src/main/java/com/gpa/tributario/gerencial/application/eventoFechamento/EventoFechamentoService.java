@@ -33,12 +33,13 @@ public class EventoFechamentoService {
 
         EventoFechamento eventoFechamento = new EventoFechamento();
         BeanUtils.copyProperties(request, eventoFechamento);
+        eventoFechamento.setUF(request.getEstado());
 
         repository.save(eventoFechamento);
     }
 
     public List<EventoFechamentoResponse> buscaTodos(){
-        return repository.findAll().stream().map(this::getResponse).toList();
+        return repository.findAllByOrderByUF().stream().map(this::getResponse).toList();
     }
 
     public List<EventoFechamentoResponse> buscaPorUF(String uf){
@@ -53,6 +54,7 @@ public class EventoFechamentoService {
     public EventoFechamentoResponse alterar(String id, EventoFechamentoRequest request){
         EventoFechamento eventoFechamento = repository.findById(id).orElseThrow(NotFoundException::new);
         BeanUtils.copyProperties(request, eventoFechamento);
+        eventoFechamento.setUF(request.getEstado());
         repository.save(eventoFechamento);
         return getResponse(eventoFechamento);
     }

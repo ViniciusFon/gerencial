@@ -3,9 +3,6 @@ application:
   title: Relatórios Gerenciais
   version: 1.0.0
 
-server:
-  port: 8080
-
 spring:
   data:
     mongodb:
@@ -31,13 +28,7 @@ spring:
       /actuator/**,
       /usuario/login/**,
       /socket/**,
-      /socket,
-      /eventoFechamento/socket.register,
-      /index.html,
-      /js/main.js,
-      /css/main.css,
-      /maxresdefault.jpg,
-      /favicon.ico
+      /socket
     default-admin:
 
     expiration-time: 30
@@ -55,7 +46,11 @@ logging:
         data:
           mongodb:
             core:
-              MongoTemplate: DEBUG
+              MongoTemplate: ERROR
+
+
+webSocket:
+  origem: ${WEBSOCKET_ORIGEM}
 
 arquivo:
   fechamento:
@@ -74,6 +69,3 @@ arquivo:
     path: C:\Users\tc024145\Documents\Arquivos\Apuracao.txt
   faturamento:
     path: C:\Users\tc024145\Documents\Arquivos\Faturamento.txt
-
-webSocket:
-  origem: http://localhost:4200

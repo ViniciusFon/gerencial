@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface EventoFechamentoRepository extends MongoRepository<EventoFechamento, String> {
 
+    List<EventoFechamento> findAllByOrderByUF();
+
     List<EventoFechamento> findByUF(String uf);
 
     @Aggregation(pipeline = {"{$group: {_id: '$UF', total: {$sum: 1}}}","{$project: { _id: 0, chave: '$_id', total: 1}}","{$sort: {chave : 1}}"})

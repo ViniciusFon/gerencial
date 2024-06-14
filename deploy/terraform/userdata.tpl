@@ -25,3 +25,11 @@
     mkdir ~/project
     cd ~/project
 
+    git clone https://github.com/ViniciusFon/gerencial.git
+    cd gerencial
+    git checkout testeAcesso
+    git pull
+    cd deploy/docker
+
+#run your docker compose file
+    docker-compose -f docker-compose-aws.yml up -d
