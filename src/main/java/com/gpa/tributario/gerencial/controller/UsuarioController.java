@@ -37,7 +37,7 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Endpoint que busca o usuário com o Id informado")
-    @PreAuthorize("hasAnyRole('ADMINISTRATOR','SUPER','GERENCIA)")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','SUPER','GERENCIA')")
     public UsuarioResponse buscarPorId(@PathVariable("id") String id){
         return usuarioService.buscaPorId(id);
     }

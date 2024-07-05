@@ -53,6 +53,7 @@ public class EventoFechamentoController {
     public List<EventoFechamentoTotaisResponse> buscaTotais(){
         return service.buscaTotais();
     }
+    
     @PostMapping("/")
     @Operation(summary = "Endpoint que insere um relatório de fechamento")
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'SUPER', 'GERENCIA')")
@@ -75,6 +76,7 @@ public class EventoFechamentoController {
 
     @PatchMapping("/{id}/{nome}")
     @Operation(summary = "Endpoint que altera o nome do relatório de fechamento com o ID informado")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'SUPER', 'GERENCIA')")
     public void alteraNome(@PathVariable("id") String id, @PathVariable("nome") String nome){
         service.alteraNome(id, nome);
     }
