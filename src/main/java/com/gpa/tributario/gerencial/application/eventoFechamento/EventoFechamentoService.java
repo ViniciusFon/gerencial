@@ -64,6 +64,18 @@ public class EventoFechamentoService {
         lst.forEach(e -> {
             e.setNome(null);
             e.setConcluido(false);
+
+            repository.save(e);
+        });
+
+        atualizaStatusWebSocket();
+    }
+
+    public void zerarTudo(){
+        List<EventoFechamento> lst = repository.findAll();
+        lst.forEach(e -> {
+            e.setNome(null);
+            e.setConcluido(false);
             e.setHistorico(null);
 
             repository.save(e);
@@ -88,7 +100,7 @@ public class EventoFechamentoService {
         historico.setNome(userDetails.getUser().getNome());
         historico.setUserName(userDetails.getUser().getUserName());
         historico.setDataHora(LocalDateTime.now());
-        historico.setAcao("Alter Status to: " + concluido);
+        historico.setAcao("Status changed to: " + concluido);
 
         eventoFechamento.addHistorico(historico);
         repository.save(eventoFechamento);

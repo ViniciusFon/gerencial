@@ -89,6 +89,13 @@ public class EventoFechamentoController {
     }
 
     @PutMapping("/ZERAR/TOTAL")
+    @Operation(summary = "Endpoint que zera o status e limpa o hitórico de todos os eventos de fechamento")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
+    public void zerarTudo(){
+        service.zerarTudo();
+    }
+
+    @PutMapping("/ZERAR")
     @Operation(summary = "Endpoint que zera o status de todos os eventos de fechamento")
     @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'SUPER', 'GERENCIA')")
     public void zerar(){
