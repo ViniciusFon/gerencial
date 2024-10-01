@@ -100,7 +100,7 @@ public class UsuarioService {
 
     // Método responsável por autenticar um usuário e retornar um token JWT
     public UsuarioResponse authenticateUser(LoginUsuarioRequest loginRequest) {
-        // Cria um objeto de autenticação com o email e a senha do usuário
+        // Cria um objeto de autenticação com o username e a senha do usuário
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(loginRequest.getUserName().toUpperCase(), loginRequest.getPassword());
 

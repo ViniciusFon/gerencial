@@ -1,7 +1,6 @@
 package com.gpa.tributario.gerencial.infrastructure.security;
 
 import com.gpa.tributario.gerencial.infrastructure.exception.UnauthorizedException;
-import com.gpa.tributario.gerencial.repository.UsuarioRepositorio;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,9 +20,6 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtTokenService jwtTokenService; // Service que definimos anteriormente
-
-    @Autowired
-    private UsuarioRepositorio userRepository; // Repository que definimos anteriormente
 
     @Value("${spring.security.default-matchers}")
     private String[] defaultMatchers;

@@ -67,8 +67,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(AccessDeniedException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	public ResponseEntity<Object> accessError(AccessDeniedException ex, WebRequest request) {
-		MessageDto responseDefault = MessageDto.builder().message("Acesso negado").details(ex.getMessage()).build();
-		return handleExceptionInternal(ex, responseDefault, new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
+		//MessageDto responseDefault = MessageDto.builder().message("Acesso negado").details(ex.getMessage()).build();
+		return handleExceptionInternal(ex, "Acesso negado", new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
 	}
 
 	@ExceptionHandler(BadCredentialsException.class)

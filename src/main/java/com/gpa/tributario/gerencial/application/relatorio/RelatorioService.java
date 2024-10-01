@@ -24,9 +24,6 @@ public class RelatorioService {
     private RelatorioRepository relatorioRepository;
 
     @Autowired
-    private ObriAcessRepository obriAcessRepository;
-
-    @Autowired
     private FaturamentoRepository faturamentoRepository;
 
     @Autowired
@@ -123,7 +120,6 @@ public class RelatorioService {
         montaFechamento(relatorio, data, uf);
         montaApuracao(relatorio, data, uf);
         montaNota(relatorio, data, uf);
-        montaObrigacoes(relatorio, data, uf);
         montaMonetizacao(relatorio, data, uf);
         montaIPI(relatorio, data, uf);
     }
@@ -190,13 +186,6 @@ public class RelatorioService {
         relatorio.setQtdeNFRecebida(qtdeNotasRecebidas);
         relatorio.setQtdeNFEmitida(qtdeNotasEmitidas);
         relatorio.setCtes(ctes);
-    }
-
-    private void montaObrigacoes(Relatorio relatorio, LocalDate data, String uf) {
-        List<ObriAcess> lstObri = obriAcessRepository.findByDataObriAndUfOrderByCodEstabelecimento(data, uf);
-        long totalObrig = lstObri.stream().mapToLong(ObriAcess::getTotal).sum();
-        relatorio.setObrigacoesAcessorias(totalObrig);
-        relatorio.setQtdeFiliais(lstObri.size());
     }
 
     private void montaMonetizacao(Relatorio relatorio, LocalDate data, String uf) {
