@@ -28,7 +28,6 @@ public class EventoObrigacoesRequest {
     @NotBlank
     private String cnpj;
     @NotNull
-    @NotBlank
     private ObrigacaoEnum obrigacao;
 
 }

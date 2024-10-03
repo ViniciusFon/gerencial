@@ -282,11 +282,19 @@ public class EventoObrigacoesService extends ArquivoBaseService<Obrigacoes> {
                 .empresa(EmpresaEnum.valueOf(split[1]))
                 .UF(split[2].trim())
                 .ufDestino(split[3].trim())
-                .loja(split[4])
+                .loja(lPad(split[4]))
                 .cnpj(split[5])
                 .ie(split[6])
                 .obrigacao(ObrigacaoEnum.valueOf(getObr(split[10])))
                 .build();
+    }
+
+    private String lPad(String value){
+        if (value.length() < 4) {
+            return StringUtils.leftPad(value, 4, "0");
+        }
+
+        return value;
     }
 
     @Override
