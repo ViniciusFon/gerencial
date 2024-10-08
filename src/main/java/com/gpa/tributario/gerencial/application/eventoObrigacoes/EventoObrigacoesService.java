@@ -247,14 +247,28 @@ public class EventoObrigacoesService extends ArquivoBaseService<Obrigacoes> {
         }).toList();
     }
 
+    public List<EventoObrigacoesTotaisResponse> buscaTotaisObrig(){
+        List<CountDto> lstCount = repository.findCountGroupByObrigacao();
+        List<CountDto> lstConcluidos = repository.findCountConcluidoGroupByObrigacao();
+
+        return lstCount.stream().map(c -> {
+            EventoObrigacoesTotaisResponse evento = new EventoObrigacoesTotaisResponse();
+            evento.setUF(c.getChave());
+            evento.setQuantidade(c.getTotal());
+            evento.setConcluidos(getConcluido(lstConcluidos, c.getChave()));
+            evento.setPendentes(evento.getQuantidade() - evento.getConcluidos());
+            return evento;
+        }).toList();
+    }
+
     @Async
     private void atualizaStatusWebSocket(){
         template.convertAndSend("/topic/graficoObrigacoes", buscaTotais());
         template.convertAndSend("/topic/listaObrigacoes", buscaTodos());
     }
 
-    private Long getConcluido(List<CountDto> lst, String uf){
-        Optional<CountDto> count = lst.stream().filter(c -> c.getChave().equals(uf)).findFirst();
+    private Long getConcluido(List<CountDto> lst, String valor){
+        Optional<CountDto> count = lst.stream().filter(c -> c.getChave().equals(valor)).findFirst();
         return count.map(CountDto::getTotal).orElse(0L);
     }
 

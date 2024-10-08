@@ -48,9 +48,15 @@ public class EventoObrigacoesController {
     }
 
     @GetMapping("/eventos/totais")
-    @Operation(summary = "Endpoint que busca os totais dos obrigações")
+    @Operation(summary = "Endpoint que busca os totais das obrigações agrupados por UF")
     public List<EventoObrigacoesTotaisResponse> buscaTotais(){
         return service.buscaTotais();
+    }
+
+    @GetMapping("/eventos/totais/obrigacoes")
+    @Operation(summary = "Endpoint que busca os totais das obrigações agrupados por tipo")
+    public List<EventoObrigacoesTotaisResponse> buscaTotaisObrig(){
+        return service.buscaTotaisObrig();
     }
 
     @PostMapping("/")

@@ -26,4 +26,10 @@ public interface ObrigacoesRepository extends MongoRepository<Obrigacoes, String
 
     @Aggregation(pipeline = {"{$match : {'concluido': true}}","{$group: {_id: '$UF', total: {$sum: 1}}}","{$project: { _id: 0, chave: '$_id', total: 1}}", "{$sort: {chave : 1}}]"})
     List<CountDto> findCountConcluidoGroupByUf();
+
+    @Aggregation(pipeline = {"{$group: {_id: '$obrigacao', total: {$sum: 1}}}","{$project: { _id: 0, chave: '$_id', total: 1}}","{$sort: {chave : 1}}"})
+    List<CountDto> findCountGroupByObrigacao();
+
+    @Aggregation(pipeline = {"{$match : {'concluido': true}}","{$group: {_id: '$obrigacao', total: {$sum: 1}}}","{$project: { _id: 0, chave: '$_id', total: 1}}", "{$sort: {chave : 1}}]"})
+    List<CountDto> findCountConcluidoGroupByObrigacao();
 }
